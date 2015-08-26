@@ -1,0 +1,25 @@
+__author__ = 'kevin.ssy'
+#code:
+def consumer():
+    r = ''
+    print('woshi ceui de %s' % r)
+    while True:
+        n = yield r
+        print('hehehe  %s' % n)
+        if not n:
+            return
+        print('[CONSUMER] Consuming %s...' % n)
+        r = r + '200 OK'
+
+def produce(c):
+    c.send(None)
+    n = 0
+    while n < 5:
+        n = n + 1
+        print('[PRODUCER] Producing %s...' % n)
+        r = c.send(6)
+        print('[PRODUCER] Consumer return: %s' % r)
+    c.close()
+
+c = consumer()
+produce(c)
